@@ -12,6 +12,8 @@ module drawing::drawing_test{
 
   use drawing::drawing::{Drawing, Self, MintCap};
 
+  const EObjectNotFound: u64 = 0;
+
   #[test]
   fun test_basic_flow(){
     let artist = @0x1;
@@ -59,14 +61,14 @@ module drawing::drawing_test{
     let coin_to_pay = coin::mint_for_testing<SUI>(2, test_scenario::ctx(scenario));
     let kiosk = test_scenario::take_shared<Kiosk>(scenario);
     let transfer_policy = test_scenario::take_shared<TransferPolicy<Drawing>>(scenario);
-    // this is where we use the id so that 
+    // this is where we use the nft id in order to buy the nft
     drawing::purchase_drawing(&mut kiosk, drawing_id, coin_to_pay, &transfer_policy, test_scenario::ctx(scenario));
     test_scenario::return_shared(transfer_policy);
     test_scenario::return_shared(kiosk);
 
     // next transaction to make sure that user owns an nft now
     test_scenario::next_tx(scenario, user);
-    test_scenario::has_most_recent_for_address<Drawing>(user);
+    assert!(test_scenario::has_most_recent_for_address<Drawing>(user), EObjectNotFound);
 
     // next transaction by artist to collect the profits
     test_scenario::next_tx(scenario, artist);

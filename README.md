@@ -1,6 +1,7 @@
-#drawing-nft
+# drawing-nft
 An example implementation of an art NFT in sui move.
-##Basic functonality description
+
+## Basic functonality description
 - The publisher of the contract should be the artist.
 - The artist is the only entity that can mint NFT-drawings.
 - Once an NFT is mint by the artist it is transferred to their address.

@@ -29,7 +29,8 @@ module drawing::drawing_test{
     test_scenario::next_tx(scenario, artist);
     let mint_cap = test_scenario::take_from_address<MintCap>(scenario, artist);
     // use a dummy url :), I am not really an artist
-    drawing::mint(&mint_cap, b"google.com", b"a test drawing", test_scenario::ctx(scenario));
+    let drawing = drawing::mint(&mint_cap, b"google.com", b"a test drawing", test_scenario::ctx(scenario));
+    transfer::public_transfer(drawing, artist);
     test_scenario::return_to_address(artist, mint_cap);
 
     // next transaction by artist to create a kiosk to sell the drawings

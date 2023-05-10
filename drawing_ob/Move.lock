@@ -5,8 +5,6 @@ version = 0
 
 dependencies = [
   { name = "NftProtocol" },
-  { name = "Originmate" },
-  { name = "Sui" },
 ]
 
 [[move.package]]
@@ -15,7 +13,7 @@ source = { git = "https://github.com/MystenLabs/sui.git", rev = "a63f425b9999c7f
 
 [[move.package]]
 name = "NftProtocol"
-source = { local = "../nft-protocol" }
+source = { git = "https://github.com/Origin-Byte/nft-protocol.git", rev = "testnet", subdir = "" }
 
 dependencies = [
   { name = "Originmate" },

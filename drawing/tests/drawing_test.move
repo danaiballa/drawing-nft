@@ -1,6 +1,7 @@
 #[test_only]
 module drawing::drawing_test{
   use std::option;
+  use std::string::utf8;
 
   use sui::coin;
   use sui::kiosk::{Self, Kiosk, KioskOwnerCap};
@@ -29,7 +30,7 @@ module drawing::drawing_test{
     test_scenario::next_tx(scenario, artist);
     let mint_cap = test_scenario::take_from_address<MintCap>(scenario, artist);
     // use a dummy url :), I am not really an artist
-    let drawing = drawing::mint(&mint_cap, b"google.com", b"a test drawing", test_scenario::ctx(scenario));
+    let drawing = drawing::mint(&mint_cap, utf8(b"google.com"), utf8(b"a test drawing"), test_scenario::ctx(scenario));
     transfer::public_transfer(drawing, artist);
     test_scenario::return_to_address(artist, mint_cap);
 

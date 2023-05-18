@@ -2,7 +2,7 @@ module drawing::drawing{
   // I am an artist, I create drawings and I want to make NFTs of them
   // I want to sell my drawings in a kiosk
 
-  use std::string::{Self, String};
+  use std::string::String;
 
   use sui::coin::{Coin};
   use sui::kiosk::{Self, Kiosk};
@@ -12,7 +12,6 @@ module drawing::drawing{
   use sui::transfer;
   use sui::transfer_policy::{Self, TransferPolicy};
   use sui::tx_context::{Self, TxContext};
-  use sui::url::{Self, Url};
 
   // one-time-witness for the publisher object
   struct DRAWING has drop {}
@@ -27,7 +26,7 @@ module drawing::drawing{
   // version field is dummy (and maybe not needed)
   struct Drawing has key, store {
     id: UID,
-    url: Url,
+    url: String,
     description: String,
     version: u64,
   }
@@ -44,8 +43,8 @@ module drawing::drawing{
     transfer::transfer(mint_cap, tx_context::sender(ctx))
   }
 
-  public fun mint(_: &MintCap, url_bytes: vector<u8>, description_bytes: vector<u8>,ctx: &mut TxContext): Drawing{
-    Drawing { id: object::new(ctx), url: url::new_unsafe_from_bytes(url_bytes), description: string::utf8(description_bytes), version: 1}
+  public fun mint(_: &MintCap, url: String, description: String,ctx: &mut TxContext): Drawing{
+    Drawing { id: object::new(ctx), url, description, version: 1}
   }
 
   // I create kiosks to sell my drawings. My kiosks are shared objects
